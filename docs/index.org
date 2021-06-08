@@ -7,6 +7,7 @@
 #+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 #+REVEAL_EXTRA_CSS: css/asciinema-player.css
 #+REVEAL_EXTRA_SCRIPTS: ("js/asciinema-player.js")
+#+REVEAL_PLUGINS: (highlight search)
 
 #+REVEAL_EXTRA_CSS: css/custom.css
 
@@ -100,7 +101,7 @@
         return;
    #+end_src
 * Scanning Demo
-  #+REVEAL_HTML: <asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright"></asciinema-player>
+  #+REVEAL_HTML: <asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=15></asciinema-player>
 * Next Steps
   * Look at TLS certificates
   * Identify:
@@ -113,6 +114,5 @@
 ** 
    #+attr_html: :width 580px
     [[./img/drac_results.png]]
-   
-* Trash
+* Trash                                                            :noexport:
 #####+REVEAL_INIT_SCRIPT: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"
