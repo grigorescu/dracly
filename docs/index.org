@@ -41,11 +41,8 @@
   * Collaboration with a hospital on medical research
   * Scope was expanded with the school's COVID response
   * *Can an attacker access PHI?*
-** Step 1: Work with the CSO to determine scope
-  * Everything*
-  * No physical access to the PHI servers
-  * Any blowback better be worth it
 ** Logistics
+   * Determine scope
    * Client provided list of subnets and access to some Slack channels
    * I told the CSO when the test began and ended
    * External test: No access provided
