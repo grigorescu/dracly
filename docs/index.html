@@ -23,8 +23,8 @@
 <h1>A Scanner DRACly<h1><h3>A PenTest Story</h3><h4>Vlad Grigorescu<br>2021-06-10</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 </section>
 <section>
-<section id="slide-org46fbf8e">
-<h2 id="org46fbf8e">About Me</h2>
+<section id="slide-org82c7717">
+<h2 id="org82c7717">About Me</h2>
 <ul>
 <li>Security Engineer @ UIUC, CMU, NCSA, ESnet</li>
 <li>Core Zeek Developer</li>
@@ -45,8 +45,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgd22afd9">
-<h2 id="orgd22afd9">What this Talk Is</h2>
+<section id="slide-org1fc3feb">
+<h2 id="org1fc3feb">What this Talk Is</h2>
 <ul>
 <li>The story of a PenTest</li>
 <li>What defenses were in place</li>
@@ -65,8 +65,8 @@
 
 </aside>
 </section>
-<section id="slide-orgad36391">
-<h3 id="orgad36391">What this Talk is NOT</h3>
+<section id="slide-org5ac591d">
+<h3 id="org5ac591d">What this Talk is NOT</h3>
 <ul>
 <li>A vendor pitch</li>
 <li>A reflection of anyone else's views</li>
@@ -76,8 +76,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org942d580">
-<h2 id="org942d580">PenTest Overview: Mission</h2>
+<section id="slide-org056e495">
+<h2 id="org056e495">PenTest Overview: Mission</h2>
 <ul>
 <li>Collaboration with a hospital on medical research</li>
 <li>Scope was expanded with the school's COVID response</li>
@@ -85,8 +85,8 @@
 
 </ul>
 </section>
-<section id="slide-orgcb758fd">
-<h3 id="orgcb758fd">Logistics</h3>
+<section id="slide-org22e45d9">
+<h3 id="org22e45d9">Logistics</h3>
 <ul>
 <li>Determine scope</li>
 <li>Client provided list of subnets and access to some Slack channels</li>
@@ -98,31 +98,31 @@
 </section>
 </section>
 <section>
-<section id="slide-org9407278">
-<h2 id="org9407278">Open-Source Intelligence</h2>
+<section id="slide-org297af60">
+<h2 id="org297af60">Open-Source Intelligence</h2>
 <ul>
 <li>Reverse DNS (<code>nmap -sL</code>)</li>
 <li>Certificate Transparency Logs</li>
 
 </ul>
 </section>
-<section id="slide-org815d24c">
-<h3 id="org815d24c">OSINT: EDU</h3>
+<section id="slide-orgb7345df">
+<h3 id="orgb7345df">OSINT: EDU</h3>
 <ul>
 <li>InCommon Federation</li>
 <li><p>
 eduroam
 </p>
 
-<div id="orga287dba" class="figure">
+<div id="org1b8a510" class="figure">
 <p><img src="./img/eduroam.png" alt="eduroam.png" width="500px">
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-orgda03bdb">
-<h3 id="orgda03bdb">OSINT: EDU</h3>
+<section id="slide-orga60711f">
+<h3 id="orga60711f">OSINT: EDU</h3>
 <ul>
 <li><p>
 Mailing lists
@@ -145,22 +145,22 @@ I switched to the bro-simple-scan package.
 </section>
 </section>
 <section>
-<section id="slide-org2ce9429">
-<h2 id="org2ce9429">Scanning</h2>
+<section id="slide-org4d6db5e">
+<h2 id="org4d6db5e">Scanning</h2>
 <ul>
 <li><p>
 bro-simple-scan
 </p>
 
-<div id="orgaa47a3d" class="figure">
+<div id="orgc0de5aa" class="figure">
 <p><img src="./img/simple_scan_bug.png" alt="simple_scan_bug.png" width="500px">
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-org5483535">
-<h3 id="org5483535">bro-simple-scan</h3>
+<section id="slide-org2594079">
+<h3 id="org2594079">bro-simple-scan</h3>
 <div class="org-src-container">
 
 <pre><code class="ruby" >    event connection_attempt(c: connection)
@@ -172,8 +172,8 @@ bro-simple-scan
 </code></pre>
 </div>
 </section>
-<section id="slide-org1c42ccb">
-<h3 id="org1c42ccb">masscan</h3>
+<section id="slide-org8ab473f">
+<h3 id="org8ab473f">masscan</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >     static unsigned char default_tcp_template[] =
@@ -183,16 +183,16 @@ bro-simple-scan
 </code></pre>
 </div>
 </section>
-<section id="slide-orga3551d8">
-<h3 id="orga3551d8">Update Zeek Packages</h3>
+<section id="slide-orgcbdd1bd">
+<h3 id="orgcbdd1bd">Update Zeek Packages</h3>
 
-<div id="org3f42429" class="figure">
+<div id="orgf6791ca" class="figure">
 <p><img src="./img/github_watch.png" alt="github_watch.png" width="500px">
 </p>
 </div>
 </section>
-<section id="slide-orgc907011">
-<h3 id="orgc907011">Zeek ssh/main.zeek</h3>
+<section id="slide-org77b3bdb">
+<h3 id="org77b3bdb">Zeek ssh/main.zeek</h3>
 <div class="org-src-container">
 
 <pre><code class="ruby" >event ssh_auth_attempted(c: connection, authenticated: bool) {
@@ -209,14 +209,14 @@ if ( c$ssh?$compression_alg &amp;&amp; \
 </section>
 </section>
 <section>
-<section id="slide-orgd8cd80c">
-<h2 id="orgd8cd80c">Scanning Demo</h2>
+<section id="slide-org1d4677a">
+<h2 id="org1d4677a">Scanning Demo</h2>
 <asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=15></asciinema-player>
 </section>
 </section>
 <section>
-<section id="slide-org0b4f7b3">
-<h2 id="org0b4f7b3">Next Steps</h2>
+<section id="slide-org0f323fd">
+<h2 id="org0f323fd">Next Steps</h2>
 <ul>
 <li>Look at TLS certificates</li>
 <li>Identify:
@@ -231,18 +231,22 @@ if ( c$ssh?$compression_alg &amp;&amp; \
 </section>
 </section>
 <section>
-<section id="slide-org256ffeb">
-<h2 id="org256ffeb">CVE-2018-1207</h2>
+<section id="slide-org7f56a39">
+<h2 id="org7f56a39">CVE-2018-1207</h2>
 
-<div id="orge1d625a" class="figure">
+<div id="org029ebed" class="figure">
 <p><img src="./img/drac_cve.png" alt="drac_cve.png" width="800px">
 </p>
 </div>
 </section>
-<section id="slide-org589e297">
-<h3 id="org589e297"></h3>
+<section id="slide-org968383a">
+<h3 id="org968383a">RCE Demo</h3>
+<asciinema-player src="casts/rce_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=45></asciinema-player>
+</section>
+<section id="slide-org7b8f633">
+<h3 id="org7b8f633">CVE Results</h3>
 
-<div id="org1e032f1" class="figure">
+<div id="org035d70e" class="figure">
 <p><img src="./img/drac_results.png" alt="drac_results.png" width="580px">
 </p>
 </div>
