@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>A Scanner DRACly</title>
+<meta name="author" content="Vlad Grigorescu"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="js/reveal.js-4.1.1/css/reveal.css"/>
+
+<link rel="stylesheet" href="js/reveal.js-4.1.1/css/theme/tomorrow_night.css" id="theme"/>
+
+<link rel="stylesheet" href="css/asciinema-player.css"/>
+
+<link rel="stylesheet" href="custom.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'js/reveal.js-4.1.1/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1>A Scanner DRACly<h1><h3>A PenTest Story</h3><h4>Vlad Grigorescu<br>2021-06-10</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="cppc.png">
+</section>
+<section>
+<section id="slide-orga255021">
+<h2 id="orga255021">About Me</h2>
+<ul>
+<li>Security Engineer @ UIUC, CMU, NCSA, ESnet</li>
+<li>Core Zeek Developer</li>
+<li>Consultant, focused on PenTesting</li>
+<li>A few CVEs, a few CTF wins</li>
+
+</ul>
+
+<aside class="notes">
+<ul>
+<li>Focused on tool development and defense</li>
+<li>A chance to flex the offensive skillset</li>
+<li>SANS CTF</li>
+
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org16a90e6">
+<h2 id="org16a90e6">What this Talk Is</h2>
+<ul>
+<li>The story of a PenTest</li>
+<li>What defenses were in place</li>
+<li>How they failed (and why it matters)</li>
+<li>How they can be improved</li>
+<li>How you can build up red-team expertise</li>
+
+</ul>
+
+<aside class="notes">
+<ul>
+<li>Aashish and Jay talks at SPC, focused on defense</li>
+<li>Attacker's point of view</li>
+
+</ul>
+
+</aside>
+</section>
+<section id="slide-org93b68ca">
+<h3 id="org93b68ca">What this Talk is NOT</h3>
+<ul>
+<li>A vendor pitch</li>
+<li>A reflection of anyone else's views</li>
+<li>Revolutionary</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orga02d939">
+<h2 id="orga02d939">PenTest Overview: Mission</h2>
+<ul>
+<li>Collaboration with a hospital on medical research</li>
+<li>Scope was expanded with the school's COVID response</li>
+<li><strong>Can an attacker access PHI?</strong></li>
+
+</ul>
+</section>
+<section id="slide-orgae1974a">
+<h3 id="orgae1974a">Step 1: Work with the CSO to determine scope</h3>
+<ul>
+<li>Everything*</li>
+<li>No physical access to the PHI servers</li>
+<li>Any blowback better be worth it</li>
+
+</ul>
+</section>
+<section id="slide-org7029e93">
+<h3 id="org7029e93">Logistics</h3>
+<ul>
+<li>Client provided list of subnets and access to some Slack channels</li>
+<li>I told the CSO when the test began and ended</li>
+<li>External test: No access provided</li>
+<li>Internal test: Virtual machine with no special access provided</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org0a22522">
+<h2 id="org0a22522">Open-Source Intelligence</h2>
+<ul>
+<li>Reverse DNS (<code>nmap -sL</code>)</li>
+<li>Certificate Transparency Logs</li>
+
+</ul>
+</section>
+<section id="slide-org704c18f">
+<h3 id="org704c18f">OSINT: EDU</h3>
+<ul>
+<li>InCommon Federation</li>
+<li><p>
+eduroam
+</p>
+
+<div id="org59cd1c6" class="figure">
+<p><img src="./eduroam.png" alt="eduroam.png" width="500px">
+</p>
+</div></li>
+
+</ul>
+</section>
+<section id="slide-org312bd4f">
+<h3 id="org312bd4f">OSINT: EDU</h3>
+<ul>
+<li><p>
+Mailing lists
+</p>
+<blockquote>
+<p>
+We monitor two full /16, 3 /24, and 2 partial /16, in front of any local FW devices.
+</p>
+
+<p>
+&#x2026;
+</p>
+
+<p>
+I switched to the bro-simple-scan package.
+</p>
+</blockquote></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org571acfb">
+<h2 id="org571acfb">Scanning</h2>
+<ul>
+<li><p>
+bro-simple-scan
+</p>
+
+<div id="org68f5fc3" class="figure">
+<p><img src="./simple_scan_bug.png" alt="simple_scan_bug.png" width="500px">
+</p>
+</div></li>
+
+</ul>
+</section>
+<section id="slide-org36f3edb">
+<h3 id="org36f3edb">bro-simple-scan</h3>
+<div class="org-src-container">
+
+<pre class="src src-ruby">    event connection_attempt(<span style="color: #81a2be;">c:</span> connection)
+    {
+-   <span style="color: #b5bd68;">if</span> ( c<span style="color: #f0c674;">$history</span> == <span style="color: #8abeb7;">"S"</span> )
++   <span style="color: #b5bd68;">if</span> ( c<span style="color: #f0c674;">$history</span> == <span style="color: #8abeb7;">"S"</span> || c<span style="color: #f0c674;">$history</span> == <span style="color: #8abeb7;">"SW"</span>)
+    add_scan(c<span style="color: #f0c674;">$id</span>);
+    }
+</pre>
+</div>
+</section>
+<section id="slide-org9349945">
+<h3 id="org9349945">masscan</h3>
+<div class="org-src-container">
+
+<pre class="src src-c++">     <span style="color: #b5bd68;">static</span> <span style="color: #81a2be;">unsigned</span> <span style="color: #81a2be;">char</span> <span style="color: #f0c674;">default_tcp_template</span>[] =
+     <span style="color: #969896; font-style: italic;">// </span><span style="color: #969896; font-style: italic;">...</span>
+-         <span style="color: #8abeb7;">"\x04\x0"</span>     <span style="color: #969896; font-style: italic;">/* </span><span style="color: #969896; font-style: italic;">window fixed to 1024</span><span style="color: #969896; font-style: italic;"> */</span>
++         <span style="color: #8abeb7;">"\x00\x0"</span>     <span style="color: #969896; font-style: italic;">/* </span><span style="color: #969896; font-style: italic;">0-sized window</span><span style="color: #969896; font-style: italic;"> */</span>
+</pre>
+</div>
+</section>
+<section id="slide-org40f87a1">
+<h3 id="org40f87a1">Update Zeek Packages</h3>
+
+<div id="org7fceeaf" class="figure">
+<p><img src="./github_watch.png" alt="github_watch.png" width="500px">
+</p>
+</div>
+</section>
+<section id="slide-orgaff6317">
+<h3 id="orgaff6317">Zeek ssh/main.zeek</h3>
+<div class="org-src-container">
+
+<pre class="src src-ruby">event ssh_auth_attempted(<span style="color: #81a2be;">c:</span> connection, <span style="color: #81a2be;">authenticated:</span> bool) {
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">...</span>
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">We can't accurately tell for compressed streams</span>
+
+<span style="color: #b5bd68;">if</span> ( c<span style="color: #f0c674;">$ssh</span>?<span style="color: #f0c674;">$compression_alg</span> &amp;&amp; \
+     ( c<span style="color: #f0c674;">$ssh$compression_alg</span> <span style="color: #b5bd68;">in</span> compression_algorithms ) )
+   <span style="color: #b5bd68;">return</span>;
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orga2ef683">
+<h2 id="orga2ef683">Scanning Demo</h2>
+<asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright"></asciinema-player>
+</section>
+</section>
+<section>
+<section id="slide-org2cfd397">
+<h2 id="org2cfd397">Next Steps</h2>
+<ul>
+<li>Look at TLS certificates</li>
+<li>Identify:
+<ul>
+<li>applications,</li>
+<li>versions,</li>
+<li>vulnerabilities</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org1dc47a8">
+<h2 id="org1dc47a8">CVE-2018-1207</h2>
+
+<div id="orgbe6c2f4" class="figure">
+<p><img src="./drac_cve.png" alt="drac_cve.png" width="800px">
+</p>
+</div>
+</section>
+<section id="slide-org4f0d822">
+<h3 id="org4f0d822"></h3>
+
+<div id="org92c03f7" class="figure">
+<p><img src="./drac_results.png" alt="drac_results.png" width="580px">
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc1947b0">
+<h2 id="orgc1947b0">Trash</h2>
+<p>
+#####+REVEAL<sub>INIT</sub><sub>SCRIPT</sub>: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="js/reveal.js-4.1.1/lib/js/head.min.js"></script>
+<script src="js/reveal.js-4.1.1/js/reveal.js"></script>
+<script src="js/asciinema-player.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'cube', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'js/reveal.js-4.1.1/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'js/reveal.js-4.1.1/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'js/reveal.js-4.1.1/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'js/reveal.js-4.1.1/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'js/reveal.js-4.1.1/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+/**
+ * Solarized Light theme for reveal.js.
+ * Author: Achim Staebler
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+
+// Include theme-specific fonts
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Source+Sans+Pro&display=swap');
+
+
+html * {
+	color-profile: sRGB;
+	rendering-intent: auto;
+}
+
+// Tomorrow bright colors
+$base03:    #969896;
+$base02:    #424242;
+$base01:    #2a2a2a;
+$base00:    #000000;
+$base0:     #b4b7b4;
+$base1:     #eaeaea;
+$base2:     #e0e0e0;
+$base3:     #ffffff;
+$yellow:    #e7c547;
+$orange:    #e78c45;
+$red:       #d54e53;
+$magenta:   #cc7295;
+$violet:    #c397d8;
+$blue:      #7aa6da;
+$cyan:      #70c0b1;
+$green:     #b9ca4a;
+
+// Override theme settings (see ../template/settings.scss)
+$mainColor: $base0;
+$headingColor: $orange;
+$headingTextShadow: none;
+$backgroundColor: $base01;
+$linkColor: $blue;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: $violet;
+
+$mainFont: 'Source Sans Pro', sans-serif;
+$headingFont: 'Source Sans Pro', sans-serif;
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------

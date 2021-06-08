@@ -1,0 +1,121 @@
+#+TITLE: A Scanner DRACly
+#+SUBTITLE: A PenTest Story
+#+DATE: 2021-06-10
+#+REVEAL_ROOT: js/reveal.js-4.1.1
+#+REVEAL_TRANS: cube
+#+REVEAL_THEME: tomorrow_night
+#+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="cppc.png">
+#+REVEAL_EXTRA_CSS: css/asciinema-player.css
+#+REVEAL_EXTRA_SCRIPTS: ("js/asciinema-player.js")
+
+#+REVEAL_EXTRA_CSS: custom.css
+
+#+OPTIONS: timestamp:nil num:nil toc:nil
+* About Me
+  * Security Engineer @ UIUC, CMU, NCSA, ESnet
+  * Core Zeek Developer
+  * Consultant, focused on PenTesting
+  * A few CVEs, a few CTF wins
+
+#+begin_notes
+  * Focused on tool development and defense
+  * A chance to flex the offensive skillset
+  * SANS CTF
+#+end_notes
+* What this Talk Is
+  * The story of a PenTest
+  * What defenses were in place
+  * How they failed (and why it matters)
+  * How they can be improved
+  * How you can build up red-team expertise
+
+#+begin_notes
+   * Aashish and Jay talks at SPC, focused on defense
+   * Attacker's point of view
+#+end_notes
+** What this Talk is NOT
+  * A vendor pitch
+  * A reflection of anyone else's views
+  * Revolutionary
+* PenTest Overview: Mission
+  * Collaboration with a hospital on medical research
+  * Scope was expanded with the school's COVID response
+  * *Can an attacker access PHI?*
+** Step 1: Work with the CSO to determine scope
+  * Everything*
+  * No physical access to the PHI servers
+  * Any blowback better be worth it
+** Logistics
+   * Client provided list of subnets and access to some Slack channels
+   * I told the CSO when the test began and ended
+   * External test: No access provided
+   * Internal test: Virtual machine with no special access provided
+* Open-Source Intelligence
+  * Reverse DNS (=nmap -sL=)
+  * Certificate Transparency Logs
+** OSINT: EDU
+  * InCommon Federation
+  * eduroam
+   #+attr_html: :width 500px
+    [[./eduroam.png]]
+** OSINT: EDU
+  * Mailing lists
+    #+begin_quote
+    We monitor two full /16, 3 /24, and 2 partial /16, in front of any local FW devices.
+
+    ...
+
+    I switched to the bro-simple-scan package.
+    #+end_quote
+* Scanning
+  * bro-simple-scan
+   #+attr_html: :width 500px
+    [[./simple_scan_bug.png]]
+** bro-simple-scan
+   #+begin_src ruby
+    event connection_attempt(c: connection)
+    {
+-   if ( c$history == "S" )
++   if ( c$history == "S" || c$history == "SW")
+    	add_scan(c$id);
+    }
+   #+end_src
+** masscan
+   #+begin_src c++
+     static unsigned char default_tcp_template[] =
+     // ...
+-         "\x04\x0"     /* window fixed to 1024 */
++         "\x00\x0"     /* 0-sized window */
+   #+end_src
+** Update Zeek Packages
+   #+attr_html: :width 500px
+   [[./github_watch.png]]
+** Zeek ssh/main.zeek
+   #+begin_src ruby
+     event ssh_auth_attempted(c: connection, authenticated: bool) {
+
+     # ...
+
+     # We can't accurately tell for compressed streams
+
+     if ( c$ssh?$compression_alg && \
+          ( c$ssh$compression_alg in compression_algorithms ) )
+        return;
+   #+end_src
+* Scanning Demo
+  #+REVEAL_HTML: <asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright"></asciinema-player>
+* Next Steps
+  * Look at TLS certificates
+  * Identify:
+    * applications,
+    * versions,
+    * vulnerabilities
+* CVE-2018-1207
+   #+attr_html: :width 800px
+    [[./drac_cve.png]]
+** 
+   #+attr_html: :width 580px
+    [[./drac_results.png]]
+   
+* Trash
+#####+REVEAL_INIT_SCRIPT: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"
