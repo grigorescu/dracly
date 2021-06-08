@@ -7,24 +7,13 @@
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" href="js/reveal.js-4.1.1/dist/css/reveal.css"/>
+<link rel="stylesheet" href="../docs/js/reveal.js-4.1.1/dist/reveal.css"/>
 
-<link rel="stylesheet" href="js/reveal.js-4.1.1/dist/css/theme/tomorrow_night.css" id="theme"/>
+<link rel="stylesheet" href="../docs/js/reveal.js-4.1.1/dist/theme/tomorrow_night.css" id="theme"/>
 
 <link rel="stylesheet" href="css/asciinema-player.css"/>
 
 <link rel="stylesheet" href="css/custom.css"/>
-
-<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-<script>
-    if( window.location.search.match( /print-pdf/gi ) ) {
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = 'js/reveal.js-4.1.1/dist/css/print/pdf.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-    }
-</script>
 </head>
 <body>
 <div class="reveal">
@@ -33,8 +22,8 @@
 <h1>A Scanner DRACly<h1><h3>A PenTest Story</h3><h4>Vlad Grigorescu<br>2021-06-10</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 </section>
 <section>
-<section id="slide-org4ad05dc">
-<h2 id="org4ad05dc">About Me</h2>
+<section id="slide-orgca6056c">
+<h2 id="orgca6056c">About Me</h2>
 <ul>
 <li>Security Engineer @ UIUC, CMU, NCSA, ESnet</li>
 <li>Core Zeek Developer</li>
@@ -55,8 +44,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgc78c5aa">
-<h2 id="orgc78c5aa">What this Talk Is</h2>
+<section id="slide-org5bdf3ba">
+<h2 id="org5bdf3ba">What this Talk Is</h2>
 <ul>
 <li>The story of a PenTest</li>
 <li>What defenses were in place</li>
@@ -75,8 +64,8 @@
 
 </aside>
 </section>
-<section id="slide-orged40926">
-<h3 id="orged40926">What this Talk is NOT</h3>
+<section id="slide-orgf1957bf">
+<h3 id="orgf1957bf">What this Talk is NOT</h3>
 <ul>
 <li>A vendor pitch</li>
 <li>A reflection of anyone else's views</li>
@@ -86,8 +75,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgd479a3d">
-<h2 id="orgd479a3d">PenTest Overview: Mission</h2>
+<section id="slide-org3155006">
+<h2 id="org3155006">PenTest Overview: Mission</h2>
 <ul>
 <li>Collaboration with a hospital on medical research</li>
 <li>Scope was expanded with the school's COVID response</li>
@@ -95,8 +84,8 @@
 
 </ul>
 </section>
-<section id="slide-org121b298">
-<h3 id="org121b298">Step 1: Work with the CSO to determine scope</h3>
+<section id="slide-orgdd8cb8e">
+<h3 id="orgdd8cb8e">Step 1: Work with the CSO to determine scope</h3>
 <ul>
 <li>Everything*</li>
 <li>No physical access to the PHI servers</li>
@@ -104,8 +93,8 @@
 
 </ul>
 </section>
-<section id="slide-org5316003">
-<h3 id="org5316003">Logistics</h3>
+<section id="slide-org053cb95">
+<h3 id="org053cb95">Logistics</h3>
 <ul>
 <li>Client provided list of subnets and access to some Slack channels</li>
 <li>I told the CSO when the test began and ended</li>
@@ -116,31 +105,31 @@
 </section>
 </section>
 <section>
-<section id="slide-orgfb05453">
-<h2 id="orgfb05453">Open-Source Intelligence</h2>
+<section id="slide-orgbd7a97d">
+<h2 id="orgbd7a97d">Open-Source Intelligence</h2>
 <ul>
 <li>Reverse DNS (<code>nmap -sL</code>)</li>
 <li>Certificate Transparency Logs</li>
 
 </ul>
 </section>
-<section id="slide-orgb12ade3">
-<h3 id="orgb12ade3">OSINT: EDU</h3>
+<section id="slide-org2f915ce">
+<h3 id="org2f915ce">OSINT: EDU</h3>
 <ul>
 <li>InCommon Federation</li>
 <li><p>
 eduroam
 </p>
 
-<div id="org4dabc99" class="figure">
+<div id="org6c6ca3a" class="figure">
 <p><img src="./img/eduroam.png" alt="eduroam.png" width="500px">
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-org5a361c7">
-<h3 id="org5a361c7">OSINT: EDU</h3>
+<section id="slide-org08b2b43">
+<h3 id="org08b2b43">OSINT: EDU</h3>
 <ul>
 <li><p>
 Mailing lists
@@ -163,22 +152,22 @@ I switched to the bro-simple-scan package.
 </section>
 </section>
 <section>
-<section id="slide-orge865a74">
-<h2 id="orge865a74">Scanning</h2>
+<section id="slide-org18319bf">
+<h2 id="org18319bf">Scanning</h2>
 <ul>
 <li><p>
 bro-simple-scan
 </p>
 
-<div id="org36d79f8" class="figure">
+<div id="org88fe485" class="figure">
 <p><img src="./img/simple_scan_bug.png" alt="simple_scan_bug.png" width="500px">
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-org138bb2c">
-<h3 id="org138bb2c">bro-simple-scan</h3>
+<section id="slide-org74dc09c">
+<h3 id="org74dc09c">bro-simple-scan</h3>
 <div class="org-src-container">
 
 <pre class="src src-ruby">    event connection_attempt(<span style="color: #81a2be;">c:</span> connection)
@@ -190,8 +179,8 @@ bro-simple-scan
 </pre>
 </div>
 </section>
-<section id="slide-orgd542e2c">
-<h3 id="orgd542e2c">masscan</h3>
+<section id="slide-orgc87d99d">
+<h3 id="orgc87d99d">masscan</h3>
 <div class="org-src-container">
 
 <pre class="src src-c++">     <span style="color: #b5bd68;">static</span> <span style="color: #81a2be;">unsigned</span> <span style="color: #81a2be;">char</span> <span style="color: #f0c674;">default_tcp_template</span>[] =
@@ -201,16 +190,16 @@ bro-simple-scan
 </pre>
 </div>
 </section>
-<section id="slide-orgbbe7271">
-<h3 id="orgbbe7271">Update Zeek Packages</h3>
+<section id="slide-orgf372e7b">
+<h3 id="orgf372e7b">Update Zeek Packages</h3>
 
-<div id="orgb4ebfd0" class="figure">
+<div id="org69a150d" class="figure">
 <p><img src="./img/github_watch.png" alt="github_watch.png" width="500px">
 </p>
 </div>
 </section>
-<section id="slide-org668db6a">
-<h3 id="org668db6a">Zeek ssh/main.zeek</h3>
+<section id="slide-org3f227cf">
+<h3 id="org3f227cf">Zeek ssh/main.zeek</h3>
 <div class="org-src-container">
 
 <pre class="src src-ruby">event ssh_auth_attempted(<span style="color: #81a2be;">c:</span> connection, <span style="color: #81a2be;">authenticated:</span> bool) {
@@ -227,14 +216,14 @@ bro-simple-scan
 </section>
 </section>
 <section>
-<section id="slide-org5d19125">
-<h2 id="org5d19125">Scanning Demo</h2>
+<section id="slide-orgf2c0eeb">
+<h2 id="orgf2c0eeb">Scanning Demo</h2>
 <asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright"></asciinema-player>
 </section>
 </section>
 <section>
-<section id="slide-org5e00378">
-<h2 id="org5e00378">Next Steps</h2>
+<section id="slide-orge4c5b3b">
+<h2 id="orge4c5b3b">Next Steps</h2>
 <ul>
 <li>Look at TLS certificates</li>
 <li>Identify:
@@ -249,18 +238,18 @@ bro-simple-scan
 </section>
 </section>
 <section>
-<section id="slide-org6ace679">
-<h2 id="org6ace679">CVE-2018-1207</h2>
+<section id="slide-org0ceba4b">
+<h2 id="org0ceba4b">CVE-2018-1207</h2>
 
-<div id="org69d9cb9" class="figure">
+<div id="orgaffd5ac" class="figure">
 <p><img src="./img/drac_cve.png" alt="drac_cve.png" width="800px">
 </p>
 </div>
 </section>
-<section id="slide-orge06f5b9">
-<h3 id="orge06f5b9"></h3>
+<section id="slide-orgb79edfc">
+<h3 id="orgb79edfc"></h3>
 
-<div id="org80f38a0" class="figure">
+<div id="org90d6f16" class="figure">
 <p><img src="./img/drac_results.png" alt="drac_results.png" width="580px">
 </p>
 </div>
@@ -268,8 +257,8 @@ bro-simple-scan
 </section>
 </section>
 <section>
-<section id="slide-orgcef99cb">
-<h2 id="orgcef99cb">Trash</h2>
+<section id="slide-org28b4973">
+<h2 id="org28b4973">Trash</h2>
 <p>
 #####+REVEAL<sub>INIT</sub><sub>SCRIPT</sub>: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"
 </p>
@@ -277,8 +266,11 @@ bro-simple-scan
 </section>
 </div>
 </div>
-<script src="js/reveal.js-4.1.1/dist/lib/js/head.min.js"></script>
-<script src="js/reveal.js-4.1.1/dist/js/reveal.js"></script>
+<script src="../docs/js/reveal.js-4.1.1/dist/reveal.js"></script>
+<script src="../docs/js/reveal.js-4.1.1/plugin/markdown/markdown.js"></script>
+<script src="../docs/js/reveal.js-4.1.1/plugin/notes/notes.js"></script>
+<script src="../docs/js/reveal.js-4.1.1/plugin/search/search.js"></script>
+<script src="../docs/js/reveal.js-4.1.1/plugin/zoom/zoom.js"></script>
 <script src="js/asciinema-player.js"></script>
 <script>
 // Full list of configuration options available here:
@@ -298,17 +290,15 @@ hashOneBasedIndex: false,
 pdfSeparateFragments: true,
 overview: true,
 
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'cube', // see README of reveal.js for options
+transition: 'cube',
 transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom ],
 
 // Optional libraries used to extend reveal.js
 dependencies: [
- { src: 'js/reveal.js-4.1.1/dist/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'js/reveal.js-4.1.1/dist/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'js/reveal.js-4.1.1/dist/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'js/reveal.js-4.1.1/dist/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'js/reveal.js-4.1.1/dist/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+]
 
 });
 </script>

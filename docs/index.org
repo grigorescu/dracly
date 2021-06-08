@@ -1,7 +1,7 @@
 #+TITLE: A Scanner DRACly
 #+SUBTITLE: A PenTest Story
 #+DATE: 2021-06-10
-#+REVEAL_ROOT: js/reveal.js-4.1.1/dist
+#+REVEAL_ROOT: js/reveal.js-4.1.1
 #+REVEAL_TRANS: cube
 #+REVEAL_THEME: tomorrow_night
 #+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
