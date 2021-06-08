@@ -4,11 +4,11 @@
 #+REVEAL_ROOT: js/reveal.js-4.1.1
 #+REVEAL_TRANS: cube
 #+REVEAL_THEME: tomorrow_night
-#+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="cppc.png">
+#+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 #+REVEAL_EXTRA_CSS: css/asciinema-player.css
 #+REVEAL_EXTRA_SCRIPTS: ("js/asciinema-player.js")
 
-#+REVEAL_EXTRA_CSS: custom.css
+#+REVEAL_EXTRA_CSS: css/custom.css
 
 #+OPTIONS: timestamp:nil num:nil toc:nil
 * About Me
@@ -57,7 +57,7 @@
   * InCommon Federation
   * eduroam
    #+attr_html: :width 500px
-    [[./eduroam.png]]
+    [[./img/eduroam.png]]
 ** OSINT: EDU
   * Mailing lists
     #+begin_quote
@@ -70,7 +70,7 @@
 * Scanning
   * bro-simple-scan
    #+attr_html: :width 500px
-    [[./simple_scan_bug.png]]
+    [[./img/simple_scan_bug.png]]
 ** bro-simple-scan
    #+begin_src ruby
     event connection_attempt(c: connection)
@@ -89,7 +89,7 @@
    #+end_src
 ** Update Zeek Packages
    #+attr_html: :width 500px
-   [[./github_watch.png]]
+   [[./img/github_watch.png]]
 ** Zeek ssh/main.zeek
    #+begin_src ruby
      event ssh_auth_attempted(c: connection, authenticated: bool) {
@@ -112,10 +112,10 @@
     * vulnerabilities
 * CVE-2018-1207
    #+attr_html: :width 800px
-    [[./drac_cve.png]]
+    [[./img/drac_cve.png]]
 ** 
    #+attr_html: :width 580px
-    [[./drac_results.png]]
+    [[./img/drac_results.png]]
    
 * Trash
 #####+REVEAL_INIT_SCRIPT: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"
