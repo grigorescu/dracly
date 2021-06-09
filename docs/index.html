@@ -23,8 +23,8 @@
 <h1>A Scanner DRACly<h1><h3>A PenTest Story</h3><h4>Vlad Grigorescu<br>2021-06-10</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 </section>
 <section>
-<section id="slide-org82c7717">
-<h2 id="org82c7717">About Me</h2>
+<section id="slide-orgde37608">
+<h2 id="orgde37608">About Me</h2>
 <ul>
 <li>Security Engineer @ UIUC, CMU, NCSA, ESnet</li>
 <li>Core Zeek Developer</li>
@@ -45,8 +45,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org1fc3feb">
-<h2 id="org1fc3feb">What this Talk Is</h2>
+<section id="slide-orgb27055b">
+<h2 id="orgb27055b">What this Talk Is</h2>
 <ul>
 <li>The story of a PenTest</li>
 <li>What defenses were in place</li>
@@ -65,8 +65,8 @@
 
 </aside>
 </section>
-<section id="slide-org5ac591d">
-<h3 id="org5ac591d">What this Talk is NOT</h3>
+<section id="slide-org80fbb6d">
+<h3 id="org80fbb6d">What this Talk is NOT</h3>
 <ul>
 <li>A vendor pitch</li>
 <li>A reflection of anyone else's views</li>
@@ -76,8 +76,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org056e495">
-<h2 id="org056e495">PenTest Overview: Mission</h2>
+<section id="slide-org899390b">
+<h2 id="org899390b">PenTest Overview: Mission</h2>
 <ul>
 <li>Collaboration with a hospital on medical research</li>
 <li>Scope was expanded with the school's COVID response</li>
@@ -85,8 +85,8 @@
 
 </ul>
 </section>
-<section id="slide-org22e45d9">
-<h3 id="org22e45d9">Logistics</h3>
+<section id="slide-org50f99ea">
+<h3 id="org50f99ea">Logistics</h3>
 <ul>
 <li>Determine scope</li>
 <li>Client provided list of subnets and access to some Slack channels</li>
@@ -98,31 +98,31 @@
 </section>
 </section>
 <section>
-<section id="slide-org297af60">
-<h2 id="org297af60">Open-Source Intelligence</h2>
+<section id="slide-org3f33ee7">
+<h2 id="org3f33ee7">Open-Source Intelligence</h2>
 <ul>
 <li>Reverse DNS (<code>nmap -sL</code>)</li>
 <li>Certificate Transparency Logs</li>
 
 </ul>
 </section>
-<section id="slide-orgb7345df">
-<h3 id="orgb7345df">OSINT: EDU</h3>
+<section id="slide-orgab0f681">
+<h3 id="orgab0f681">OSINT: EDU</h3>
 <ul>
 <li>InCommon Federation</li>
 <li><p>
 eduroam
 </p>
 
-<div id="org1b8a510" class="figure">
+<div id="orgbb72173" class="figure">
 <p><img src="./img/eduroam.png" alt="eduroam.png" width="500px">
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-orga60711f">
-<h3 id="orga60711f">OSINT: EDU</h3>
+<section id="slide-org5f347d9">
+<h3 id="org5f347d9">OSINT: EDU</h3>
 <ul>
 <li><p>
 Mailing lists
@@ -145,22 +145,22 @@ I switched to the bro-simple-scan package.
 </section>
 </section>
 <section>
-<section id="slide-org4d6db5e">
-<h2 id="org4d6db5e">Scanning</h2>
+<section id="slide-org328c76d">
+<h2 id="org328c76d">Scanning</h2>
 <ul>
 <li><p>
 bro-simple-scan
 </p>
 
-<div id="orgc0de5aa" class="figure">
+<div id="org8e23a5f" class="figure">
 <p><img src="./img/simple_scan_bug.png" alt="simple_scan_bug.png" width="500px">
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-org2594079">
-<h3 id="org2594079">bro-simple-scan</h3>
+<section id="slide-orgc229c0b">
+<h3 id="orgc229c0b">bro-simple-scan</h3>
 <div class="org-src-container">
 
 <pre><code class="ruby" >    event connection_attempt(c: connection)
@@ -172,8 +172,8 @@ bro-simple-scan
 </code></pre>
 </div>
 </section>
-<section id="slide-org8ab473f">
-<h3 id="org8ab473f">masscan</h3>
+<section id="slide-org8356c69">
+<h3 id="org8356c69">masscan</h3>
 <div class="org-src-container">
 
 <pre><code class="c++" >     static unsigned char default_tcp_template[] =
@@ -183,16 +183,16 @@ bro-simple-scan
 </code></pre>
 </div>
 </section>
-<section id="slide-orgcbdd1bd">
-<h3 id="orgcbdd1bd">Update Zeek Packages</h3>
+<section id="slide-org5f0acf5">
+<h3 id="org5f0acf5">Update Zeek Packages</h3>
 
-<div id="orgf6791ca" class="figure">
+<div id="orgd0851e8" class="figure">
 <p><img src="./img/github_watch.png" alt="github_watch.png" width="500px">
 </p>
 </div>
 </section>
-<section id="slide-org77b3bdb">
-<h3 id="org77b3bdb">Zeek ssh/main.zeek</h3>
+<section id="slide-org62da38a">
+<h3 id="org62da38a">Zeek ssh/main.zeek</h3>
 <div class="org-src-container">
 
 <pre><code class="ruby" >event ssh_auth_attempted(c: connection, authenticated: bool) {
@@ -209,14 +209,14 @@ if ( c$ssh?$compression_alg &amp;&amp; \
 </section>
 </section>
 <section>
-<section id="slide-org1d4677a">
-<h2 id="org1d4677a">Scanning Demo</h2>
+<section id="slide-orgcc55c7a">
+<h2 id="orgcc55c7a">Scanning Demo</h2>
 <asciinema-player src="casts/masscan_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=15></asciinema-player>
 </section>
 </section>
 <section>
-<section id="slide-org0f323fd">
-<h2 id="org0f323fd">Next Steps</h2>
+<section id="slide-org655d6fa">
+<h2 id="org655d6fa">Next Steps</h2>
 <ul>
 <li>Look at TLS certificates</li>
 <li>Identify:
@@ -231,23 +231,139 @@ if ( c$ssh?$compression_alg &amp;&amp; \
 </section>
 </section>
 <section>
-<section id="slide-org7f56a39">
-<h2 id="org7f56a39">CVE-2018-1207</h2>
+<section id="slide-org508e673">
+<h2 id="org508e673">CVE-2018-1207</h2>
 
-<div id="org029ebed" class="figure">
+<div id="orgfbd5f26" class="figure">
 <p><img src="./img/drac_cve.png" alt="drac_cve.png" width="800px">
 </p>
 </div>
 </section>
-<section id="slide-org968383a">
-<h3 id="org968383a">RCE Demo</h3>
+<section id="slide-orgda22f26">
+<h3 id="orgda22f26">RCE Demo</h3>
 <asciinema-player src="casts/rce_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=45></asciinema-player>
 </section>
-<section id="slide-org7b8f633">
-<h3 id="org7b8f633">CVE Results</h3>
+<section id="slide-org3c7ec84">
+<h3 id="org3c7ec84">Persistence</h3>
+<ul>
+<li>Until a reboot</li>
+<li>Until an update</li>
+<li>Forever?
+<ul>
+<li>Cron jobs</li>
+<li>syslog-ng hooks</li>
+<li>Overwrite an updated file?</li>
 
-<div id="org035d70e" class="figure">
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org5e81a57">
+<h3 id="org5e81a57">CVE Results</h3>
+
+<div id="org884fe8e" class="figure">
 <p><img src="./img/drac_results.png" alt="drac_results.png" width="580px">
+</p>
+</div>
+</section>
+<section id="slide-orga758909">
+<h3 id="orga758909">Recovering Credentials</h3>
+<div class="org-src-container">
+
+<pre><code class="bash" >% root:sAcyG/RZbH7ScaJjXLO/kefW564eRXs4ilf+VX0f+K4=:2:1:Administrator:/flash/data0/home/root:/bin/sh:0x1FF...
+% ./drac_exec 10.87.5.42 | ./dump_hashes.sh
+10.87.5.42_root:F269FB2DA3CD3A842D15263736A57D51E55600819F195E678C3E8152ED3B5693:F77E82DAED468941C81D9B08AC755695
+</code></pre>
+</div>
+</section>
+<section id="slide-org5fcd026">
+<h3 id="org5fcd026">vast.ai</h3>
+
+<div id="orgef00d5f" class="figure">
+<p><img src="./img/vast_ai.png" alt="vast_ai.png" width="500px">
+</p>
+</div>
+</section>
+<section id="slide-orge5551a7">
+<h3 id="orge5551a7">Hashcat</h3>
+<div class="org-src-container">
+
+<pre><code class="bash" >hashcat -O -a 3 -m 1410 hashes --username --hex-salt
+</code></pre>
+</div>
+<div class="org-src-container">
+
+<pre><code class="bash" >f26...c755695:"C4tnapz!"
+Session..........: hashcat
+Status...........: Cracked
+Hash.Name........: sha256($pass.$salt)
+Hash.Target......: f269...755695
+Speed.#1.........:     9746.6 MH/s (70.35ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#2.........:     9507.4 MH/s (72.12ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#3.........:     9691.5 MH/s (70.75ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#4.........:     9641.1 MH/s (71.12ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#5.........:    10081.9 MH/s (68.01ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#6.........:     9043.4 MH/s (75.82ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#7.........:     9819.2 MH/s (69.83ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.#8.........:     9642.4 MH/s (71.11ms) @ Accel:8 Loops:1024 Thr:1024 Vec:1
+Speed.Total......:    77173.6 MH/s
+Recovered........: 1/1 (100.00%) Digests
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgf78aef6">
+<h2 id="orgf78aef6">Pivoting</h2>
+<ul>
+<li>Find other management interfaces with the same credentials</li>
+<li>Layer 2 attacks to other management interfaces</li>
+<li>Scan non-management interfaces: <a href="https://github.com/ncsa/ssh-auditor">https://github.com/ncsa/ssh-auditor</a></li>
+
+</ul>
+</section>
+<section id="slide-org3f62ec2">
+<h3 id="org3f62ec2">Got root</h3>
+<div class="org-src-container">
+
+<pre><code class="bash" >[root@proxy-01 ~]# w
+21:21:53 up 598 days,  8:38,  1 user,  load average: 0.00, 0.01, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    vlad-pentest 21:21    1.00s  0.00s  0.00s w
+</code></pre>
+</div>
+<img src="https://thumbs.gfycat.com/ElderlyFarawayCrossbill.webp"></img>
+</section>
+</section>
+<section>
+<section id="slide-org9244464">
+<h2 id="org9244464">Layer 2 Attacks</h2>
+<div class="org-src-container">
+
+<pre><code class="bash" >2: eno16180012: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+  link/ether 00:50:56:81:fa:08 brd ff:ff:ff:ff:ff:ff
+  inet "100.120.95.17/21" brd 100.120.99.255 scope global noprefixroute eno16180012
+</code></pre>
+</div>
+</section>
+<section id="slide-org71449d9">
+<h3 id="org71449d9">Bettercap</h3>
+<p>
+<a href="https://bettercap.org">https://bettercap.org</a>
+</p>
+
+<div id="orge91eb7f" class="figure">
+<p><img src="./img/bettercap.png" alt="bettercap.png" width="500px">
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orge6845e5">
+<h2 id="orge6845e5">Findings</h2>
+
+<div id="org359ad2c" class="figure">
+<p><img src="./img/findings.png" alt="findings.png" width="500px">
 </p>
 </div>
 </section>
@@ -257,6 +373,7 @@ if ( c$ssh?$compression_alg &amp;&amp; \
 <script src="js/reveal.js-4.1.1/dist/reveal.js"></script>
 <script src="js/reveal.js-4.1.1/plugin/highlight/highlight.js"></script>
 <script src="js/reveal.js-4.1.1/plugin/search/search.js"></script>
+<script src="js/reveal.js-4.1.1/plugin/notes/notes.js"></script>
 <script src="js/asciinema-player.js"></script>
 <script>
 // Full list of configuration options available here:
@@ -280,13 +397,13 @@ transition: 'cube',
 transitionSpeed: 'default',
 
 // Plugins with reveal.js 4.x
-plugins: [ RevealHighlight, RevealSearch ],
+plugins: [ RevealHighlight, RevealSearch, RevealNotes ],
 
 // Optional libraries used to extend reveal.js
 dependencies: [
 ]
 
-});
+,totalTime: 2400});
 </script>
 </body>
 </html>
