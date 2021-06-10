@@ -4,19 +4,21 @@
 #+REVEAL_ROOT: js/reveal.js-4.1.1
 #+REVEAL_TRANS: cube
 #+REVEAL_THEME: tomorrow_night
-#+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><img style="position:absolute; top:250px; left:700px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
+#+REVEAL_TITLE_SLIDE: <h1>%t<h1><h3>%s</h3><h4>%a<br>%d</h4><h5>vlad@zeek.org</h5><a href="https://github.com/grigorescu/dracly">https://github.com/grigorescu/dracly</a><img style="position:absolute; top:250px; left:1100px; width:150px; height:150px; transform: rotate(30deg)" src="img/cppc.png">
 #+REVEAL_EXTRA_CSS: css/asciinema-player.css
 #+REVEAL_EXTRA_SCRIPTS: ("js/asciinema-player.js")
 #+REVEAL_PLUGINS: (highlight search notes)
-#+REVEAL_INIT_SCRIPT: totalTime: 2400
+#+REVEAL_TOTALTIME: 2400
 #+REVEAL_EXTRA_CSS: css/custom.css
 
-#+OPTIONS: timestamp:nil num:nil toc:nil
+
+#+OPTIONS: timestamp:nil num:nil toc:nil reveal_width:1320 reveal_height:1080
+
 * About Me
   * Security Engineer @ UIUC, CMU, NCSA, ESnet
   * Core Zeek Developer
   * Consultant, focused on PenTesting
-  * A few CVEs, a few CTF wins
+  * Some CTF wins, a few CVEs
 
 #+begin_notes
   * Focused on tool development and defense
@@ -28,7 +30,6 @@
   * What defenses were in place
   * How they failed (and why it matters)
   * How they can be improved
-  * How you can build up red-team expertise
 
 #+begin_notes
    * Aashish and Jay talks at SPC, focused on defense
@@ -44,7 +45,6 @@
   * *Can an attacker access PHI?*
 ** Logistics
    * Determine scope
-   * Client provided list of subnets and access to some Slack channels
    * I told the CSO when the test began and ended
    * External test: No access provided
    * Internal test: Virtual machine with no special access provided
@@ -54,7 +54,7 @@
 ** OSINT: EDU
   * InCommon Federation
   * eduroam
-   #+attr_html: :width 500px
+   #+attr_html: :width 800px
     [[./img/eduroam.png]]
 ** OSINT: EDU
   * Mailing lists
@@ -67,10 +67,10 @@
     #+end_quote
 * Scanning
   * bro-simple-scan
-   #+attr_html: :width 500px
+   #+attr_html: :width 800px
     [[./img/simple_scan_bug.png]]
 ** bro-simple-scan
-   #+begin_src ruby
+   #+begin_src diff
     event connection_attempt(c: connection)
     {
 -   if ( c$history == "S" )
@@ -79,7 +79,7 @@
     }
    #+end_src
 ** masscan
-   #+begin_src c++
+   #+begin_src diff
      static unsigned char default_tcp_template[] =
      // ...
 -         "\x04\x0"     /* window fixed to 1024 */
@@ -112,7 +112,7 @@
    #+attr_html: :width 800px
     [[./img/drac_cve.png]]
 ** RCE Demo
-  #+REVEAL_HTML: <asciinema-player src="casts/rce_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright" rows=45></asciinema-player>
+  #+REVEAL_HTML: <asciinema-player src="casts/rce_demo.cast" preload="yes" poster="npt:0:03" theme="tomorrow-night-bright"></asciinema-player>
 ** Persistence
    * Until a reboot
    * Until an update
@@ -124,13 +124,34 @@
    #+attr_html: :width 580px
     [[./img/drac_results.png]]
 ** Recovering Credentials
+   avctpasswd:
+
+   #+begin_src java
+    { "username":       "root",
+      "MD5v3Key":       "dysn21V658AsG...=",
+      "level":          2,
+      "enabled":        1,
+      "displayName":    "Administrator",
+      "home":           "/flash/data0/home/root",
+      "shell":          "/bin/sh",
+      "ipmiPriv",       "0x1FF",
+      "sshEnabled":     1,
+      "lastModified":   1405248653,
+      "snmpv3PrivType": 1, "snmpv3Enabled":  0, "snmpv3AuthType": 2,
+      "sha1v3Key":      "kCGUFB7Z2RnC...=",
+      "sha256Hash":     "cNpBuoId7+Fl...=",
+      "sha256Salt":     "F77E82DAED468...",
+      "solEnabled":     1
+    }
+   #+end_src
+
+** Recovering Credentials
    #+begin_src bash
-   % root:sAcyG/RZbH7ScaJjXLO/kefW564eRXs4ilf+VX0f+K4=:2:1:Administrator:/flash/data0/home/root:/bin/sh:0x1FF...
    % ./drac_exec 10.87.5.42 | ./dump_hashes.sh
    10.87.5.42_root:F269FB2DA3CD3A842D15263736A57D51E55600819F195E678C3E8152ED3B5693:F77E82DAED468941C81D9B08AC755695
    #+end_src
 ** vast.ai
-   #+attr_html: :width 500px
+   #+attr_html: :width 800px
     [[./img/vast_ai.png]]
 ** Hashcat
    #+begin_src bash
@@ -171,12 +192,40 @@
     link/ether 00:50:56:81:fa:08 brd ff:ff:ff:ff:ff:ff
     inet "100.120.95.17/21" brd 100.120.99.255 scope global noprefixroute eno16180012
   #+end_src
+** Target Hosts
+   * DCs
+   * VMware
+   * LDAP
+   * Puppet
+   * git
+   * Jenkins
+   * vmtest-josh
+   * prod-dc-old
 ** Bettercap
-   https://bettercap.org
-   #+attr_html: :width 500px
+   #+attr_html: :width 800px
    [[./img/bettercap.png]]
+** Kerberos Hashes
+   #+begin_src bash
+   [21:39:47] [net.sniff.krb5] krb-as-req 1.2.3.124 -> dc1 : $krb5$18$falken$ZOMBIE.EDU$nodata$3206...
+   [21:39:47] [net.sniff.krb5] krb-as-req 1.2.3.129 -> dc1 : $krb5$18$david$ZOMBIE.EDU$nodata$5d81...
+   #+end_src
 * Findings
-   #+attr_html: :width 500px
+   #+attr_html: :width 800px
    [[./img/findings.png]]
+* Conclusions
+  * Comprehensive detections
+  * Aware of any gaps
+  * Baselining, determining communication patterns
+  * Updates
+  * Segmentation
+  * https://github.com/esnet-security/curated-pcaps
+* References
+  * https://github.com/grigorescu/dracly
+  * https://zeek.org
+  * https://github.com/robertdavidgraham/masscan
+  * https://github.com/ncsa/bhr-site
+  * https://github.com/ncsa/ssh-auditor
+  * https://bettercap.org
+  * https://github.com/esnet-security/curated-pcaps
 * Trash                                                            :noexport:
 #####+REVEAL_INIT_SCRIPT: parallaxBackgroundImage: "./background.jpg", parallaxBackgroundSize: "6211px 1686px"
